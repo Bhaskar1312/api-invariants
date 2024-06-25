@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 
 @Service
 public class YamlService {
@@ -30,6 +33,22 @@ public class YamlService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return List.of();
+        return List.of(); // should I throw an exception here?
+    }
+
+
+    // static
+    public boolean writeToYaml(String filePath, List<YamlRecord> records) { // should the return type be void?
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory()
+            .disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)); // disabling   optional
+        // mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        try {
+            // mapper.copyWith(new YAMLFactory()); // for any defaults for all records??
+            mapper.writeValue(new File(filePath), records);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

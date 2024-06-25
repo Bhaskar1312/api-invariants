@@ -1,5 +1,6 @@
 package com.example.configascode;
 
+import java.lang.reflect.Field;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -14,10 +15,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @SpringBootApplication
-public class MainApplication implements CommandLineRunner {
+public class MainApplication {
+    // implements CommandLineRunner {
 
     public static void main(String[] args) {
+        // YamlRecord tempRecord1 = new YamlRecord();
+        // tempRecord1.setField1("value12");
+        // tempRecord1.setField2("value22");
+        // YamlService.writeToYaml("src/main/resources/data2.yaml", List.of(tempRecord1));
         SpringApplication.run(MainApplication.class, args);
     }
 
@@ -27,7 +36,7 @@ public class MainApplication implements CommandLineRunner {
 
     @Autowired
     private ApiService apiService;
-    @Override
+    // @Override
     public void run(String... args) throws Exception {
         String yamlPath = "src/main/resources/data.yaml";
         String url = "https://httpbin.org/post";
@@ -63,11 +72,35 @@ public class MainApplication implements CommandLineRunner {
 
     }
 
-    private Map<String, Object> constructRequestBody(YamlRecord record) {
+    private Map<String, Object> constructRequestBody(YamlRecord record) { // should this be improved? auto-convert to Map?
+        // Map<String, Object> requestBody = new HashMap<>();
+        // requestBody.put("field1", record.getField1());
+        // requestBody.put("field2", record.getField2());
+        // // Add more fields as needed
+        // return requestBody;
+
+        // return constructRequestBodyUsingReflection(record);
+
+        return constructRequestBodyUsingJackson(record);
+    }
+
+
+    private Map<String, Object> constructRequestBodyUsingReflection(YamlRecord record) {// can I use jackson?
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("field1", record.getField1());
-        requestBody.put("field2", record.getField2());
-        // Add more fields as needed
+        for(Field field: record.getClass().getDeclaredFields()) {
+            field.setAccessible(true); // use getter instead? in case of primitives, in case of objects, use recursively?
+            try {
+                requestBody.put(field.getName(), field.get(record));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         return requestBody;
+    }
+
+    public Map<String, Object> constructRequestBodyUsingJackson(YamlRecord record) {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(record, new TypeReference<>() {
+        });
     }
 }
