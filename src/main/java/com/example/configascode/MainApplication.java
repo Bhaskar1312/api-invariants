@@ -27,7 +27,7 @@ public class MainApplication {
         // tempRecord1.setField1("value12");
         // tempRecord1.setField2("value22");
         // YamlService.writeToYaml("src/main/resources/data2.yaml", List.of(tempRecord1));
-        SpringApplication.run(MainApplication.class, args);
+        SpringApplication.run(MainApplication.class, args).close();
     }
 
 
