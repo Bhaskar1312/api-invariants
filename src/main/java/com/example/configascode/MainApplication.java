@@ -19,8 +19,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootApplication
-public class MainApplication {
-    // implements CommandLineRunner {
+public class MainApplication //{
+    implements CommandLineRunner {
 
     public static void main(String[] args) {
         // YamlRecord tempRecord1 = new YamlRecord();
@@ -36,7 +36,7 @@ public class MainApplication {
 
     @Autowired
     private ApiService apiService;
-    // @Override
+    @Override
     public void run(String... args) throws Exception {
         String yamlPath = "src/main/resources/data.yaml";
         String url = "https://httpbin.org/post";
