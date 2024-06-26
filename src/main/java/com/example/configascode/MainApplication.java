@@ -15,6 +15,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -104,3 +108,9 @@ public class MainApplication //{
         });
     }
 }
+
+// @JsonValue - use annotated property as a serialized value
+// @JsonRawValue - use property literally on serialization
+// @JsonUnwrapped - like JPA embeddable: flatten structure in JSON. Doesn't support constructor-based unmarshalling
+// @JsonFormat - customize serialization/deserialization of date, number, collections, enums etc.. ; configure case-insensitive properties
+

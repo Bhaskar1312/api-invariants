@@ -73,7 +73,7 @@ public class RestTemplateConfig {
     // with jackson, you can also use maps which has keys and values
     // httpbin.org/post just echoes back
 
-    // unmarshal to JsonNode and use JsonPointer(thread-safe)
+    // unmarshal to JsonNode (Json DOM tree) and use JsonPointer(thread-safe)
     // JsonPath.compile("") JsonPath by default doesn't use Jackson
 
     // use @JsonView(Summary.class) on fields and use @JsonView(Summary.class) on class to include fields in summary view
