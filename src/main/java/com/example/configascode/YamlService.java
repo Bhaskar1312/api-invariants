@@ -1,10 +1,13 @@
 package com.example.configascode;
 
+import org.apache.catalina.mapper.Mapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -51,4 +54,11 @@ public class YamlService {
         }
         return true;
     }
+
+    // private ObjectMapper objectMapper;
+    // public YamlService(Jackson2ObjectMapperBuilder builder) {
+    //     this.objectMapper = builder.failOnUnknownProperties(true).build();
+    // }
+
+
 }

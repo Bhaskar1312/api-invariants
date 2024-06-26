@@ -1,5 +1,9 @@
 package com.example.configascode;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+// @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class YamlRecord {
     private String field1;
     private String field2;
