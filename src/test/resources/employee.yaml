@@ -1,0 +1,13 @@
+---
+firstName: "Bhaskar"
+lastName: "Bantupalli"
+salary: 1
+address:
+  streetNo: "Pune"
+  pincodes:
+  - 4
+  - 1
+  - 1
+  - 0
+  - 5
+  - 7
